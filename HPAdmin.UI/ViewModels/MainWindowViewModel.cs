@@ -1,79 +1,62 @@
 ﻿using System.Collections.ObjectModel;
 using AutoMapper;
 using HPAdmin.Data;
-using HPAdmin.Data.Data;
-using HPAdmin.Models.Models;
+using HPAdmin.Data.Dto;
+using HPAdmin.UI.Models;
 
-namespace HPAdmin.ViewModels
+namespace HPAdmin.UI.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public abstract class ViewModelBase(AppDbContext context, IMapper mapper) : BindableBase
+    public DelegateCommand ViewLoaded { get; }
+    public DelegateCommand AddTask { get; }
+    public DelegateCommand Save { get; }
+
+
+    public ObservableCollection<HomeTaskModel> HomeTasks { get; } = [];
+
+    private string _title = "Home Planner - Admin";
+
+    public MainWindowViewModel(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
-        public AppDbContext DbContext { get; } = context;
-        public IMapper DataMapper { get; } = mapper;
+        ViewLoaded = new DelegateCommand(onViewLoaded);
+        AddTask = new DelegateCommand(onAddTask);
+        Save = new DelegateCommand(onSave);
     }
 
-    public class MainWindowViewModel : ViewModelBase
+    private int index = 0;
+    private void onAddTask()
     {
-        public DelegateCommand ViewLoaded { get; }
-        public DelegateCommand AddTask { get; }
-        public DelegateCommand Save { get; }
-
-
-        public ObservableCollection<HomeTaskModel> HomeTasks { get; } = [];
-
-        private string _title = "Home Planner - Admin";
-
-        public MainWindowViewModel(AppDbContext context, IMapper mapper) : base(context, mapper)
+        var dto = new HomeTaskDto
         {
-            ViewLoaded = new DelegateCommand(onViewLoaded);
-            AddTask = new DelegateCommand(onAddTask);
-            Save = new DelegateCommand(onSave);
-        }
+            Title = "New Task" + ++index,
+            Description = "New Task Description",
+            IsCompleted = false
+        };
 
-        private int index = 0;
-        private void onAddTask()
+        var model = DataMapper.Map<HomeTaskModel>(dto);
+        HomeTasks.Add(model);
+    }
+
+    public string Title
+    {
+        get => _title;
+        set => SetProperty(ref _title, value);
+    }
+
+
+    private void onViewLoaded()
+    {
+        var dtos = DbContext.HomeTasks.ToList();
+        foreach (var model in dtos.Select(dto => DataMapper.Map<HomeTaskModel>(dto)))
         {
-            var dto = new HomeTaskDto
-            {
-                Title = "New Task" + ++index,
-                Description = "New Task Description",
-                IsCompleted = false
-            };
-
-            var model = DataMapper.Map<HomeTaskModel>(dto);
             HomeTasks.Add(model);
         }
-
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
-
-
-        private void onViewLoaded()
-        {
-            var dtos = DbContext.HomeTasks.ToList();
-            foreach (var model in dtos.Select(dto => DataMapper.Map<HomeTaskModel>(dto)))
-            {
-                HomeTasks.Add(model);
-            }
-        }
-
-        private void onSave()
-        {
-            DbContext.HomeTasks.AddRange(HomeTasks.GetDtos<HomeTaskDto, HomeTaskModel>());
-            DbContext.SaveChanges();
-        }
     }
-}
 
-public static class Extensions
-{
-    public static TDto[] GetDtos<TDto, TModel>(this ObservableCollection<TModel> models)
-        where TDto : DtoDataBase
-        where TModel : ModelBase<TDto>
+    private void onSave()
     {
-        return models.Select(m => m.Dto).ToArray();
+        DbContext.HomeTasks.AddRange(HomeTasks.GetDtos<HomeTaskDto, HomeTaskModel>());
+        DbContext.SaveChanges();
     }
 }

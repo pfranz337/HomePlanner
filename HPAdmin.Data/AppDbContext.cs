@@ -1,4 +1,5 @@
-﻿using HPAdmin.Data.Data;
+﻿using HPAdmin.Data.Dto;
+using HPAdmin.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +18,10 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         var builder = new DbContextOptionsBuilder<AppDbContext>();
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile(Configuration.ConfigurationSetting)
             .Build();
 
-        builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        builder.UseSqlServer(configuration.GetConnectionString(Configuration.ConnectionString));
 
         return new AppDbContext(builder.Options);
     }

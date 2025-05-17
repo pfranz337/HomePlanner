@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace HPAdmin.Views;
+namespace HPAdmin.UI.Views;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml

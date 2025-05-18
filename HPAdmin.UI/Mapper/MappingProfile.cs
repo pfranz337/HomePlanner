@@ -9,10 +9,10 @@ public class MappingProfile<TDto, TModel> : Profile where TDto : DtoDataBase whe
     public MappingProfile()
     {
         CreateMap<TDto, TModel>()
-            .ConstructUsing((src, context) =>
+            .ConstructUsing((dto, context) =>
             {
                 var modelType = typeof(TModel);
-                var instance = Activator.CreateInstance(modelType, src);
+                var instance = Activator.CreateInstance(modelType, dto);
                 return instance switch
                 {
                     null => throw new InvalidOperationException($"Cannot create instance of {modelType}"),

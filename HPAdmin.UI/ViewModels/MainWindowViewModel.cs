@@ -58,7 +58,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void onSave()
     {
-        DbContext.HomeTasks.UpdateDbSet(HomeTasks.DtoList);
+        DbContext.HomeTasks.UpdateDbSet(HomeTasks.GetDtoList());
         DbContext.SaveChanges();
     }
 

@@ -9,29 +9,26 @@ public sealed class ModelListBase<TModel, TDto> : ObservableCollection<TModel>
     where TModel : ModelBase<TDto>
     where TDto : DtoDataBase
 {
-    public List<TDto> DtoList { get; } = [];
+    private List<TDto> DtoList { get; } = [];
 
     public ModelListBase()
     {
         CollectionChanged += models_CollectionChanged;
     }
 
-    public void ClearAll()
+    public List<TDto> GetDtoList()
     {
-        foreach (var model in Items)
-        {
-            Remove(model);
-        }
+        return DtoList;
     }
 
     protected override void InsertItem(int index, TModel item)
     {
-        if (item.Dto.State == DtoState.Deleted)
+        if (item.State == DtoState.Deleted)
             throw new InvalidOperationException("Nelze přidat model ve stavu Deleted.");
 
-        if (DtoList.All(d => d.Id != item.Dto.Id))
+        if (DtoList.All(d => d.Id != item.Id))
         {
-            DtoList.Add(item.Dto);
+            DtoList.Add(item.GetDto());
         }
 
         base.InsertItem(index, item);
@@ -40,7 +37,7 @@ public sealed class ModelListBase<TModel, TDto> : ObservableCollection<TModel>
     protected override void RemoveItem(int index)
     {
         var item = Items[index];
-        var dto = item.Dto;
+        var dto = item.GetDto();
 
         switch (dto.State)
         {
@@ -58,18 +55,16 @@ public sealed class ModelListBase<TModel, TDto> : ObservableCollection<TModel>
         base.RemoveItem(index);
     }
 
-
-
     private void models_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.NewItems is { Count: > 0 })
         {
             foreach (TModel model in e.NewItems)
             {
-                if (DtoList.Any(d => d.Id == model.Dto.Id))
+                if (DtoList.Any(d => d.Id == model.Id))
                     continue;
 
-                DtoList.Add(model.Dto);
+                DtoList.Add(model.GetDto());
             }
         }
 
@@ -78,16 +73,16 @@ public sealed class ModelListBase<TModel, TDto> : ObservableCollection<TModel>
 
         foreach (TModel model in e.OldItems)
         {
-            switch (model.Dto.State)
+            switch (model.State)
             {
                 case DtoState.New:
-                    DtoList.Remove(model.Dto);
+                    DtoList.Remove(model.GetDto());
                     break;
                 case DtoState.Clean:
                 case DtoState.Modified:
                 case DtoState.Deleted:
                 default:
-                    model.Dto.State = DtoState.Deleted;
+                    model.State = DtoState.Deleted;
                     break;
             }
         }

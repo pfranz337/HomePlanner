@@ -1,0 +1,6 @@
+/* Prikazy pro migraci:
+ * 1) instalace: dotnet tool install --global dotnet-ef
+ * 2) overeni verze: dotnet ef --version
+ * 3) incializace migrace: dotnet ef migrations add NAZEV_MIGRACE --project HPAdmin.Data --startup-project HPAdmin.Data
+ * 4) provedeni migrace: dotnet ef database update --project HPAdmin.Data --startup-project HPAdmin.Data
+ */

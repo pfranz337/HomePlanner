@@ -4,8 +4,13 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:models="clr-namespace:HPAdmin.UI.Models"
+        xmlns:ui="clr-namespace:HPAdmin.UI"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="350" Width="525">
+
+    <Window.Resources>
+        <ui:BindingProxy x:Key="Proxy" Data="{Binding}" />
+    </Window.Resources>
 
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
@@ -26,7 +31,17 @@
         <ListBox Grid.Row="1" ItemsSource="{Binding HomeTasks}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:HomeTaskModel}">
-                    <TextBlock Text="{Binding Dto.Title}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding Dto.Title}" Grid.Column="0" />
+                        <Button Content="X" 
+                                Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteTask}" 
+                                CommandParameter="{Binding}" 
+                                Grid.Column="1" />
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

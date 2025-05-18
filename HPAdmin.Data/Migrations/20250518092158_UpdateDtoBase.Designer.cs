@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HPAdmin.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250517155203_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250518092158_UpdateDtoBase")]
+    partial class UpdateDtoBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace HPAdmin.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HPAdmin.Data.Data.HomeTaskDto", b =>
+            modelBuilder.Entity("HPAdmin.Data.Dto.HomeTaskDto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,6 +38,12 @@ namespace HPAdmin.Data.Migrations
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
+
+                    b.Property<byte[]>("Stamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<string>("Title")
                         .IsRequired()

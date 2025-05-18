@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HPAdmin.Data.Dto;
-using HPAdmin.UI.Models;
+using HPAdmin.UI.Models.Base;
 
 namespace HPAdmin.UI.Mapper;
 

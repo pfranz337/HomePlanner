@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using AutoMapper;
-using HPAdmin.Data;
+using HPAdmin.Data.DbContext;
 using HPAdmin.Shared;
 using HPAdmin.UI.Mapper;
 using HPAdmin.UI.ViewModels;

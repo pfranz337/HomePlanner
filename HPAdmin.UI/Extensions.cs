@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using HPAdmin.Data.Dto;
-using HPAdmin.UI.Models;
+using HPAdmin.UI.Models.Base;
 
 public static class Extensions
 {

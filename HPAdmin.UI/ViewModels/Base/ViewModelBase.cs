@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HPAdmin.Data;
+using HPAdmin.Data.DbContext;
 
-namespace HPAdmin.UI.ViewModels;
+namespace HPAdmin.UI.ViewModels.Base;
 
 public abstract class ViewModelBase(AppDbContext context, IMapper mapper) : BindableBase
 {

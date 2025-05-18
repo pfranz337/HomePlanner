@@ -1,15 +1,9 @@
-﻿using HPAdmin.Data.Dto;
-using HPAdmin.Shared;
+﻿using HPAdmin.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace HPAdmin.Data;
-
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
-{
-    public DbSet<HomeTaskDto> HomeTasks { get; set; }
-}
+namespace HPAdmin.Data.DbContext;
 
 public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
@@ -26,12 +20,3 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         return new AppDbContext(builder.Options);
     }
 }
-
-
-/*
- * Prikazy pro migraci:
- * 1) instalace: dotnet tool install --global dotnet-ef
- * 2) overeni verze: dotnet ef --version
- * 3) incializace migrace: dotnet ef migrations add InitialCreate --project HPAdmin.Data --startup-project HPAdmin.Data
- * 4) provedeni migrace: dotnet ef database update --project HPAdmin.Data --startup-project HPAdmin.Data
- */

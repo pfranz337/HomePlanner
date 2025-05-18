@@ -10,10 +10,10 @@ namespace HPAdmin.UI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    public DelegateCommand ViewLoaded { get; }
-    public DelegateCommand AddTask { get; }
-    public DelegateCommand<HomeTaskModel> DeleteTask { get; }
-    public DelegateCommand Save { get; }
+    public DelegateCommand ViewLoadedCommand { get; }
+    public DelegateCommand AddTaskCommand { get; }
+    public DelegateCommand<HomeTaskModel> DeleteTaskCommand { get; }
+    public DelegateCommand SaveDataCommand { get; }
     public ModelListBase<HomeTaskModel, HomeTaskDto> HomeTasks { get; } = [];
 
     private string _title = "Home Planner - Admin";
@@ -26,19 +26,19 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
-        ViewLoaded = new DelegateCommand(onViewLoaded);
-        AddTask = new DelegateCommand(onAddTask);
-        DeleteTask = new DelegateCommand<HomeTaskModel>(onDeleteTask);
-        Save = new DelegateCommand(onSave);
+        ViewLoadedCommand = new DelegateCommand(onViewLoaded);
+        AddTaskCommand = new DelegateCommand(onAddTask);
+        DeleteTaskCommand = new DelegateCommand<HomeTaskModel>(onDeleteTask);
+        SaveDataCommand = new DelegateCommand(onSave);
     }
 
 
-    private int index = 0;
+    private int _index;
     private void onAddTask()
     {
         var dto = new HomeTaskDto
         {
-            Title = "New Task" + ++index,
+            Title = "New Task" + ++_index,
             Description = "New Task Description",
             IsCompleted = false
         };

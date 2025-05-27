@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using HPAdmin.Data.Dto;
+using HPAdmin.Shared.Dto;
 using HPAdmin.Shared.Enums;
 
 namespace HPAdmin.UI.Models.Base;
@@ -19,6 +19,12 @@ public sealed class ModelListBase<TModel, TDto> : ObservableCollection<TModel>
     public List<TDto> GetDtoList()
     {
         return DtoList;
+    }
+
+    protected override void ClearItems()
+    {
+        DtoList.Clear();
+        base.ClearItems();
     }
 
     protected override void InsertItem(int index, TModel item)

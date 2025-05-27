@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Collections.ObjectModel;
+using AutoMapper;
 using HPAdmin.Data;
 using HPAdmin.Data.DbContext;
-using HPAdmin.Data.Dto;
+using HPAdmin.Shared.Dto;
 using HPAdmin.UI.Models;
 using HPAdmin.UI.Models.Base;
 using HPAdmin.UI.ViewModels.Base;
@@ -49,21 +50,25 @@ public class MainWindowViewModel : ViewModelBase
 
     private void onViewLoaded()
     {
-        var dtoList = DbContext.HomeTasks.ToList();
-        foreach (var model in dtoList.Select(dto => DataMapper.Map<HomeTaskModel>(dto)))
-        {
-            HomeTasks.Add(model);
-        }
+        loadData();        
     }
 
     private void onSave()
     {
         DbContext.HomeTasks.UpdateDbSet(HomeTasks.GetDtoList());
         DbContext.SaveChanges();
+        loadData();
     }
 
     private void onDeleteTask(HomeTaskModel task)
     {
         HomeTasks.Remove(task);
     }
-}
+
+    private void loadData()
+    {
+        HomeTasks.Clear();
+        var dtoList = DbContext.HomeTasks.ToList();
+        HomeTasks.AddRange(dtoList.Select(DataMapper.Map<HomeTaskModel>));
+    }
+} 

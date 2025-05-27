@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using HPAdmin.Shared.Enums;
 
-namespace HPAdmin.Data.Dto;
+namespace HPAdmin.Shared.Dto;
 
 public abstract class DtoDataBase(Guid id, DtoState state, byte[] stamp)
 {

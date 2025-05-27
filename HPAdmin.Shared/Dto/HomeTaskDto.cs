@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.Data.Dto;
+﻿namespace HPAdmin.Shared.Dto;
 
 public class HomeTaskDto : DtoDataBase
 {

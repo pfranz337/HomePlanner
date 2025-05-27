@@ -1,4 +1,4 @@
-﻿using HPAdmin.Data.Dto;
+﻿using HPAdmin.Shared.Dto;
 using HPAdmin.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +14,11 @@ namespace HPAdmin.Data
                 {
                     case DtoState.New:
                         dbSet.Add(dto);
+                        dto.State = DtoState.Clean;
                         break;
                     case DtoState.Modified:
                         dbSet.Update(dto);
+                        dto.State = DtoState.Clean;
                         break;
                     case DtoState.Clean:
                         break;

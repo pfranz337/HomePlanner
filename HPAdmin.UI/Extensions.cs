@@ -1,4 +1,4 @@
-﻿using HPAdmin.Data.Dto;
+﻿using HPAdmin.Shared.Dto;
 using HPAdmin.UI.Models.Base;
 
 namespace HPAdmin.UI;

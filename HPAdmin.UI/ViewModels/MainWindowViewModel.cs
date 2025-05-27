@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using AutoMapper;
 using HPAdmin.Data;
 using HPAdmin.Data.DbContext;
@@ -6,6 +7,7 @@ using HPAdmin.Shared.Dto;
 using HPAdmin.UI.Models;
 using HPAdmin.UI.Models.Base;
 using HPAdmin.UI.ViewModels.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace HPAdmin.UI.ViewModels;
 
@@ -55,9 +57,17 @@ public class MainWindowViewModel : ViewModelBase
 
     private void onSave()
     {
-        DbContext.HomeTasks.UpdateDbSet(HomeTasks.GetDtoList());
-        DbContext.SaveChanges();
-        loadData();
+        try
+        {
+            DbContext.HomeTasks.UpdateDbSet(HomeTasks.GetDtoList());
+            DbContext.SaveChanges();
+            loadData();
+        }
+        catch (DbUpdateConcurrencyException _)
+        {
+            MessageBox.Show("Data byla změněna jiným uživatelem a budou přenačtena.");
+            loadData();
+        }
     }
 
     private void onDeleteTask(HomeTaskModel task)

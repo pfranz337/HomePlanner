@@ -3,6 +3,7 @@ using System.Windows;
 using AutoMapper;
 using HPAdmin.Data.DbContext;
 using HPAdmin.Shared;
+using HPAdmin.UI.Heleprs;
 using HPAdmin.UI.Mapper;
 using HPAdmin.UI.ViewModels;
 using HPAdmin.UI.Views;
@@ -16,7 +17,11 @@ namespace HPAdmin.UI;
 /// </summary>
 public partial class App
 {
-    protected override Window CreateShell() => Container.Resolve<MainWindow>(); // Use the instance of the container
+    protected override Window CreateShell()
+    {
+        DIHelper.Instance.SetProvider(Container);
+        return Container.Resolve<MainWindow>(); // Use the instance of the container
+    }
 
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
@@ -50,6 +55,8 @@ public partial class App
 
         containerRegistry.Register<MainWindowViewModel>();
         containerRegistry.Register<MainWindow>();
+
+        DIHelper.Create(containerRegistry);
     }
 
     protected override void InitializeShell(Window shell)

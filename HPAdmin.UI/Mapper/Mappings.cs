@@ -8,6 +8,5 @@ public static class Mappings
     public static Dictionary<Type, Type> TypeMappings { get; } = new()
     {
         { typeof(HomeTaskDto), typeof(HomeTaskModel) },
-        // Přidejte další mapování podle potřeby
     };
 }

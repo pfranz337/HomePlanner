@@ -6,6 +6,8 @@
              xmlns:base="clr-namespace:HPAdmin.UI.Views.Base"
              xmlns:converters="clr-namespace:HPAdmin.UI.Converters"
              xmlns:viewModels="clr-namespace:HPAdmin.UI.Controls.MVVM.ViewModels"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:LoginControlViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">

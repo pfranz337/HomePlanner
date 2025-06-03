@@ -8,6 +8,10 @@ public class DIHelper
     private IContainerRegistry ContainerRegistry { get; }
 
     private IContainerProvider ContainerProvider { get; set; }
+    
+    public IEventAggregator EventAggregator { get; private set; }
+
+    public IRegionManager RegionManager { get; private set; }
 
     public static DIHelper Instance { get; private set; }
 
@@ -28,6 +32,8 @@ public class DIHelper
     public void SetProvider(IContainerProvider provider)
     {
         ContainerProvider ??= provider;
+        EventAggregator = provider.Resolve<IEventAggregator>();
+        RegionManager = provider.Resolve<IRegionManager>();
     }
 
     public TView Resolve<TView>() where TView : IView

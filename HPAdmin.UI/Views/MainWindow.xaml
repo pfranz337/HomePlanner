@@ -6,6 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewModels="clr-namespace:HPAdmin.UI.ViewModels"
+        xmlns:views="clr-namespace:HPAdmin.UI.Controls.MVVM.Views"
+        xmlns:templateSelectors="clr-namespace:HPAdmin.UI.TemplateSelectors"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
@@ -16,6 +18,19 @@
             <prism:InvokeCommandAction Command="{Binding ViewLoadedCommand}" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
+
+    <Window.Resources>
+        <DataTemplate x:Key="taskListTemplate">
+            <views:TasksControlView />
+        </DataTemplate>
+        <DataTemplate x:Key="loginTemplate">
+            <views:LoginControlView />
+        </DataTemplate>
+
+        <templateSelectors:MainWindowViewTemplateSelector x:Key="mainWindowViewTemplateSelector" 
+                                                          LoginTemplate="{StaticResource loginTemplate}"
+                                                          TasksTemplate="{StaticResource taskListTemplate}"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -39,9 +54,10 @@
             <Button Grid.Column="2" Content="Odhlásit" Command="{Binding LogoutCommand}" Margin="10" />
         </Grid>
 
-        <!-- todo: tady by se to melo resit pomoci datatemptate a ne pres DIHelper -->
         <!-- Obsahová část -->
-        <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
+        <ContentControl Grid.Row="1" 
+                        Content="{Binding SelectedViewType}"
+                        ContentTemplateSelector="{StaticResource mainWindowViewTemplateSelector}" />
     </Grid>
 
 </Window>

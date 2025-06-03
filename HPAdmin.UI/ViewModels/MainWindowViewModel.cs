@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-using AutoMapper;
+﻿using AutoMapper;
 using HPAdmin.Data.DbContext;
-using HPAdmin.UI.Controls.MVVM.ViewModels;
-using HPAdmin.UI.Controls.MVVM.Views;
+using HPAdmin.UI.EventAgregators;
 using HPAdmin.UI.Heleprs;
 using HPAdmin.UI.ViewModels.Base;
 
@@ -10,19 +8,18 @@ namespace HPAdmin.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private UserControl _currentView;
+        
         private string? _loggedUserName;
         private bool _isLoggedIn;
-        private LoginControlView? _loginView;
-        private TasksControlView? _taskView;
         private string _title = "Home Planner - Admin";
+        private MainWindowViewType _selectedViewType = MainWindowViewType.Login;
 
-        public UserControl CurrentView
+        public MainWindowViewType SelectedViewType
         {
-            get => _currentView;
-            set => SetProperty(ref _currentView, value);
+            get => _selectedViewType;
+            set => SetProperty(ref _selectedViewType, value);
         }
-        
+
         public string Title
         {
             get => _title;
@@ -53,6 +50,9 @@ namespace HPAdmin.UI.ViewModels
 
         public MainWindowViewModel(AppDbContext context, IMapper mapper) : base(context, mapper)
         {
+            DIHelper.Instance.EventAggregator.GetEvent<OnLoginEvent>().Subscribe(onLoginSucceeded);
+            DIHelper.Instance.EventAggregator.GetEvent<OnLogoutEvent>().Subscribe(logout);
+
             ShowLoginCommand = new DelegateCommand(showLogin);
             ShowTasksCommand = new DelegateCommand(showTasks, () => IsLoggedIn);
             LogoutCommand = new DelegateCommand(logout, () => IsLoggedIn);
@@ -64,17 +64,7 @@ namespace HPAdmin.UI.ViewModels
 
         private void showLogin()
         {
-            if (_loginView == null)
-            {
-                _loginView = DIHelper.Instance.Resolve<LoginControlView>();
-                if (_loginView.DataContext is LoginControlViewModel loginVm)
-                {
-                    loginVm.LoginSucceeded += onLoginSucceeded;
-                    loginVm.LogoutRequested += logout;
-                }
-            }
-
-            CurrentView = _loginView;
+            SelectedViewType = MainWindowViewType.Login;
         }
 
         private void showTasks()
@@ -82,16 +72,8 @@ namespace HPAdmin.UI.ViewModels
             if (!IsLoggedIn)
                 return;
 
-            if (_taskView == null)
-            {
-                _taskView = DIHelper.Instance.Resolve<TasksControlView>();
-                if (_taskView.DataContext is TasksControlViewModel taskVm)
-                {
-                    taskVm.LoadData();
-                }
-            }
-
-            CurrentView = _taskView;
+            DIHelper.Instance.EventAggregator.GetEvent<OnTasksNavigateEvent>().Publish();
+            SelectedViewType = MainWindowViewType.Tasks;
         }
 
         private void onLoginSucceeded(string userName)
@@ -105,12 +87,9 @@ namespace HPAdmin.UI.ViewModels
 
         private void logout()
         {
-            //todo: tady chybi poslani informace do logincontrol ze se odhlasuju, melo by byt take reseno pres session a eventagregator nebo podobne,
-            //ted se na talcitko z mainwindow nerfreshe ui, jen kdyz to udelam primo z logincontrol
             LoggedUserName = null;
             IsLoggedIn = false;
-            _taskView = null;
-
+            
             raiseCommandCanExecutes();
             showLogin();
         }
@@ -125,5 +104,11 @@ namespace HPAdmin.UI.ViewModels
         {
             showLogin();
         }
+    }
+
+    public enum MainWindowViewType
+    {
+        Login,
+        Tasks
     }
 }

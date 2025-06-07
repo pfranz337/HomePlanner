@@ -8,8 +8,6 @@ namespace HPAdmin.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private string? _loggedUserName;
-        private bool _isLoggedIn;
         private string _title = "Home Planner - Admin";
         //private MainWindowViewType _selectedViewType = MainWindowViewType.Login;
 
@@ -19,27 +17,17 @@ namespace HPAdmin.UI.ViewModels
         //    set => SetProperty(ref _selectedViewType, value);
         //}
 
-
-
         public string Title
         {
-            get => _title;
+            get => string.IsNullOrEmpty(LoggedUserName) ? _title : $"{_title} - {LoggedUserName}";
             set => SetProperty(ref _title, value);
         }
 
-        public string? LoggedUserName
-        {
-            get => _loggedUserName;
-            set => SetProperty(ref _loggedUserName, value);
-        }
+        public string? LoggedUserName => DIHelper.Instance.SessionService.UserName;
 
-        public bool IsLoggedIn
-        {
-            get => _isLoggedIn;
-            set => SetProperty(ref _isLoggedIn, value);
-        }
+        public bool IsLoggedIn => DIHelper.Instance.SessionService.IsLoggedIn;
 
-        public DelegateCommand ViewLoadedCommand { get; }
+        //public DelegateCommand ViewLoadedCommand { get; }
 
         public DelegateCommand ShowLoginCommand { get; }
 
@@ -57,7 +45,7 @@ namespace HPAdmin.UI.ViewModels
             ShowLoginCommand = new DelegateCommand(showLogin);
             ShowTasksCommand = new DelegateCommand(showTasks, () => IsLoggedIn);
             LogoutCommand = new DelegateCommand(logout, () => IsLoggedIn);
-            ViewLoadedCommand = new DelegateCommand(onViewLoaded);
+            //ViewLoadedCommand = new DelegateCommand(onViewLoaded);
 
             DIHelper.Instance.SessionService.OnLogin += sessionService_OnLogin;
             DIHelper.Instance.SessionService.OnLogout += sessionService_OnLogout;
@@ -73,21 +61,18 @@ namespace HPAdmin.UI.ViewModels
         private void sessionService_OnLogin(object? sender, SessionService.LoginInfo e)
         {
             onLoginSucceeded(e.UserName);
+            RaisePropertyChanged(nameof(Title));
         }
 
         private void showLogin()
         {
             //SelectedViewType = MainWindowViewType.Login;
-            showLoginContent();
+            showLoginContent(!IsLoggedIn);
         }
 
         private void showLoginContent(bool isLogout = false)
         {
-            var parameters = new NavigationParameters
-            {
-                { "IsLogout", isLogout }
-            };
-            DIHelper.Instance.RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(LoginControlView), parameters);
+            DIHelper.Instance.RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(LoginControlView));
         }
 
         private void showTasks()
@@ -102,24 +87,21 @@ namespace HPAdmin.UI.ViewModels
 
         private void onLoginSucceeded(string userName)
         {
-            LoggedUserName = userName;
-            IsLoggedIn = true;
             raiseCommandCanExecutes();
-
             showTasks();
         }
 
         private void logout()
         {
-            raiseLogout();
+            DIHelper.Instance.SessionService.Logout();
             showLoginContent(true);
+            raiseLogout();
         }
 
         private void raiseLogout()
         {
-            LoggedUserName = null;
-            IsLoggedIn = false;
             raiseCommandCanExecutes();
+            RaisePropertyChanged(nameof(Title));
         }
 
         private void raiseCommandCanExecutes()
@@ -128,10 +110,10 @@ namespace HPAdmin.UI.ViewModels
             ShowTasksCommand.RaiseCanExecuteChanged();
         }
 
-        private void onViewLoaded()
-        {
-            showLogin();
-        }
+        //private void onViewLoaded()
+        //{
+        //    showLogin();
+        //}
     }
 
     //public enum MainWindowViewType

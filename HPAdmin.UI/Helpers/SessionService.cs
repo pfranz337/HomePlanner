@@ -21,7 +21,7 @@ public class SessionService
         OnLogin?.Invoke(this, new LoginInfo(userName));
     }
 
-    public void Logout(string userName)
+    public void Logout()
     {
         IsLoggedIn = false;
         UserName = null;

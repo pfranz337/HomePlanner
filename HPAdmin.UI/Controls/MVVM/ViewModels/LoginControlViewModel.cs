@@ -14,12 +14,7 @@ public class LoginControlViewModel : ViewModelBase, IRegionMemberLifetime, INavi
 
     public string? Password { get; set; }
 
-    private bool isLoggedIn;
-    public bool IsLoggedIn
-    {
-        get => isLoggedIn;
-        set => SetProperty(ref isLoggedIn, value);
-    }
+    public bool IsLoggedIn => DIHelper.Instance.SessionService.IsLoggedIn;
 
     public string? LoggedUserName { get; set; }
 
@@ -39,10 +34,7 @@ public class LoginControlViewModel : ViewModelBase, IRegionMemberLifetime, INavi
 
     public void OnNavigatedTo(NavigationContext navigationContext)
     {
-        if (navigationContext.Parameters.TryGetValue("IsLogout", out bool isLogout))
-        {
-            IsLoggedIn = !isLogout;
-        }
+        RaisePropertyChanged(nameof(IsLoggedIn));
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -58,13 +50,12 @@ public class LoginControlViewModel : ViewModelBase, IRegionMemberLifetime, INavi
         //DIHelper.Instance.EventAggregator.GetEvent<OnLoginEvent>().Publish(LoggedUserName);
         DIHelper.Instance.SessionService.Login(UserName ?? string.Empty);
         DIHelper.Instance.RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(TasksControlView));
-        IsLoggedIn = true;
     }
 
     private void onLogout()
     {
         //DIHelper.Instance.EventAggregator.GetEvent<OnLogoutEvent>().Publish();
-        DIHelper.Instance.SessionService.Logout(UserName ?? string.Empty);
-        IsLoggedIn = false;
+        DIHelper.Instance.SessionService.Logout();
+        RaisePropertyChanged(nameof(IsLoggedIn));
     }
 }

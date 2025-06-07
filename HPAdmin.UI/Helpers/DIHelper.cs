@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using HPAdmin.UI.Views.Base;
 
-namespace HPAdmin.UI.Heleprs;
+namespace HPAdmin.UI.Helpers;
 
 public class DIHelper
 {
@@ -12,6 +12,8 @@ public class DIHelper
     public IEventAggregator EventAggregator { get; private set; }
 
     public IRegionManager RegionManager { get; private set; }
+
+    public SessionService SessionService { get; private set; }
 
     public static DIHelper Instance { get; private set; }
 
@@ -34,6 +36,7 @@ public class DIHelper
         ContainerProvider ??= provider;
         EventAggregator = provider.Resolve<IEventAggregator>();
         RegionManager = provider.Resolve<IRegionManager>();
+        SessionService = provider.Resolve<SessionService>();
     }
 
     public TView Resolve<TView>() where TView : IView

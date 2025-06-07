@@ -4,8 +4,6 @@ using AutoMapper;
 using HPAdmin.Data;
 using HPAdmin.Data.DbContext;
 using HPAdmin.Shared.Dto;
-using HPAdmin.UI.EventAgregators;
-using HPAdmin.UI.Heleprs;
 using HPAdmin.UI.Models;
 using HPAdmin.UI.Models.Base;
 using HPAdmin.UI.ViewModels.Base;
@@ -13,8 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HPAdmin.UI.Controls.MVVM.ViewModels;
 
-public class TasksControlViewModel : ViewModelBase
+public class TasksControlViewModel : ViewModelBase, IRegionMemberLifetime, INavigationAware
 {
+    public bool KeepAlive => true;
+
     public DelegateCommand AddTaskCommand { get; }
 
     public DelegateCommand<HomeTaskModel> DeleteTaskCommand { get; }
@@ -27,17 +27,24 @@ public class TasksControlViewModel : ViewModelBase
 
     public TasksControlViewModel(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
-        DIHelper.Instance.EventAggregator.GetEvent<OnTasksNavigateEvent>().Subscribe(LoadData);
-
         AddTaskCommand = new DelegateCommand(onAddTask);
         DeleteTaskCommand = new DelegateCommand<HomeTaskModel>(onDeleteTask);
         SaveDataCommand = new DelegateCommand(onSave);
-
-        LoadData();
     }
 
 
 
+    public void OnNavigatedTo(NavigationContext navigationContext)
+    {
+        LoadData();
+    }
+
+    public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+
+    public void OnNavigatedFrom(NavigationContext navigationContext)
+    {
+        onSave();
+    }
     public void LoadData()
     {
         HomeTasks.Clear();

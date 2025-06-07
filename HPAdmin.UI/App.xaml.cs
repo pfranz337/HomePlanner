@@ -3,7 +3,7 @@ using System.Windows;
 using AutoMapper;
 using HPAdmin.Data.DbContext;
 using HPAdmin.Shared;
-using HPAdmin.UI.Heleprs;
+using HPAdmin.UI.Helpers;
 using HPAdmin.UI.Mapper;
 using HPAdmin.UI.ViewModels;
 using HPAdmin.UI.Views;
@@ -55,6 +55,7 @@ public partial class App
 
         containerRegistry.Register<MainWindowViewModel>();
         containerRegistry.Register<MainWindow>();
+        containerRegistry.RegisterSingleton<SessionService>();
 
         DIHelper.Create(containerRegistry);
     }
@@ -64,5 +65,23 @@ public partial class App
         base.InitializeShell(shell);
         Application.Current.MainWindow = shell;
         Application.Current.MainWindow.Show();
+    }
+
+    protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+    {
+        var moduleTypes = typeof(App).Assembly
+            .GetTypes()
+            .Where(t => typeof(IModule).IsAssignableFrom(t) && !t.IsAbstract);
+
+        
+        foreach (var moduleType in moduleTypes)
+        {
+            moduleCatalog.AddModule(new ModuleInfo
+            {
+                ModuleName = moduleType.Name,
+                ModuleType = moduleType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+        }
     }
 }

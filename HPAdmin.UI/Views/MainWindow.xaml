@@ -6,8 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewModels="clr-namespace:HPAdmin.UI.ViewModels"
-        xmlns:views="clr-namespace:HPAdmin.UI.Controls.MVVM.Views"
-        xmlns:templateSelectors="clr-namespace:HPAdmin.UI.TemplateSelectors"
+        xmlns:helpers="clr-namespace:HPAdmin.UI.Helpers"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
@@ -19,7 +18,7 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
 
-    <Window.Resources>
+    <!--<Window.Resources>
         <DataTemplate x:Key="taskListTemplate">
             <views:TasksControlView />
         </DataTemplate>
@@ -30,7 +29,7 @@
         <templateSelectors:MainWindowViewTemplateSelector x:Key="mainWindowViewTemplateSelector" 
                                                           LoginTemplate="{StaticResource loginTemplate}"
                                                           TasksTemplate="{StaticResource taskListTemplate}"/>
-    </Window.Resources>
+    </Window.Resources>-->
 
     <Grid>
         <Grid.RowDefinitions>
@@ -55,9 +54,10 @@
         </Grid>
 
         <!-- Obsahová část -->
-        <ContentControl Grid.Row="1" 
+        <!--<ContentControl Grid.Row="1" 
                         Content="{Binding SelectedViewType}"
-                        ContentTemplateSelector="{StaticResource mainWindowViewTemplateSelector}" />
+                        ContentTemplateSelector="{StaticResource mainWindowViewTemplateSelector}" />-->
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static helpers:RegionNames.MainRegion}" />
     </Grid>
 
 </Window>

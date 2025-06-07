@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using HPAdmin.Data.DbContext;
-using HPAdmin.UI.EventAgregators;
-using HPAdmin.UI.Heleprs;
+using HPAdmin.UI.Controls.MVVM.Views;
+using HPAdmin.UI.Helpers;
 using HPAdmin.UI.ViewModels.Base;
 
 namespace HPAdmin.UI.Controls.MVVM.ViewModels;
 
-public class LoginControlViewModel : ViewModelBase
-{
+public class LoginControlViewModel : ViewModelBase, IRegionMemberLifetime, INavigationAware
+{ 
+    public bool KeepAlive => true;
+
     public string? UserName { get; set; }
 
     public string? Password { get; set; }
@@ -35,15 +37,34 @@ public class LoginControlViewModel : ViewModelBase
 
 
 
+    public void OnNavigatedTo(NavigationContext navigationContext)
+    {
+        if (navigationContext.Parameters.TryGetValue("IsLogout", out bool isLogout))
+        {
+            IsLoggedIn = !isLogout;
+        }
+    }
+
+    public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+
+    public void OnNavigatedFrom(NavigationContext navigationContext)
+    {
+    }
+
+
+
     private void onLogin()
     {
-        DIHelper.Instance.EventAggregator.GetEvent<OnLoginEvent>().Publish(LoggedUserName);
+        //DIHelper.Instance.EventAggregator.GetEvent<OnLoginEvent>().Publish(LoggedUserName);
+        DIHelper.Instance.SessionService.Login(UserName ?? string.Empty);
+        DIHelper.Instance.RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(TasksControlView));
         IsLoggedIn = true;
     }
 
     private void onLogout()
     {
+        //DIHelper.Instance.EventAggregator.GetEvent<OnLogoutEvent>().Publish();
+        DIHelper.Instance.SessionService.Logout(UserName ?? string.Empty);
         IsLoggedIn = false;
-        DIHelper.Instance.EventAggregator.GetEvent<OnLogoutEvent>().Publish();
     }
 }

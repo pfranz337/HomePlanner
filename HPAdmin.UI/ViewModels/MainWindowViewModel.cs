@@ -1,24 +1,25 @@
 ﻿using AutoMapper;
 using HPAdmin.Data.DbContext;
-using HPAdmin.UI.EventAgregators;
-using HPAdmin.UI.Heleprs;
+using HPAdmin.UI.Controls.MVVM.Views;
+using HPAdmin.UI.Helpers;
 using HPAdmin.UI.ViewModels.Base;
 
 namespace HPAdmin.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        
         private string? _loggedUserName;
         private bool _isLoggedIn;
         private string _title = "Home Planner - Admin";
-        private MainWindowViewType _selectedViewType = MainWindowViewType.Login;
+        //private MainWindowViewType _selectedViewType = MainWindowViewType.Login;
 
-        public MainWindowViewType SelectedViewType
-        {
-            get => _selectedViewType;
-            set => SetProperty(ref _selectedViewType, value);
-        }
+        //public MainWindowViewType SelectedViewType
+        //{
+        //    get => _selectedViewType;
+        //    set => SetProperty(ref _selectedViewType, value);
+        //}
+
+
 
         public string Title
         {
@@ -50,21 +51,43 @@ namespace HPAdmin.UI.ViewModels
 
         public MainWindowViewModel(AppDbContext context, IMapper mapper) : base(context, mapper)
         {
-            DIHelper.Instance.EventAggregator.GetEvent<OnLoginEvent>().Subscribe(onLoginSucceeded);
-            DIHelper.Instance.EventAggregator.GetEvent<OnLogoutEvent>().Subscribe(logout);
+            //DIHelper.Instance.EventAggregator.GetEvent<OnLoginEvent>().Subscribe(onLoginSucceeded);
+            //DIHelper.Instance.EventAggregator.GetEvent<OnLogoutEvent>().Subscribe(logout);
 
             ShowLoginCommand = new DelegateCommand(showLogin);
             ShowTasksCommand = new DelegateCommand(showTasks, () => IsLoggedIn);
             LogoutCommand = new DelegateCommand(logout, () => IsLoggedIn);
             ViewLoadedCommand = new DelegateCommand(onViewLoaded);
 
+            DIHelper.Instance.SessionService.OnLogin += sessionService_OnLogin;
+            DIHelper.Instance.SessionService.OnLogout += sessionService_OnLogout;
         }
 
-        
+
+
+        private void sessionService_OnLogout(object? sender, EventArgs e)
+        {
+            raiseLogout();
+        }
+
+        private void sessionService_OnLogin(object? sender, SessionService.LoginInfo e)
+        {
+            onLoginSucceeded(e.UserName);
+        }
 
         private void showLogin()
         {
-            SelectedViewType = MainWindowViewType.Login;
+            //SelectedViewType = MainWindowViewType.Login;
+            showLoginContent();
+        }
+
+        private void showLoginContent(bool isLogout = false)
+        {
+            var parameters = new NavigationParameters
+            {
+                { "IsLogout", isLogout }
+            };
+            DIHelper.Instance.RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(LoginControlView), parameters);
         }
 
         private void showTasks()
@@ -72,8 +95,9 @@ namespace HPAdmin.UI.ViewModels
             if (!IsLoggedIn)
                 return;
 
-            DIHelper.Instance.EventAggregator.GetEvent<OnTasksNavigateEvent>().Publish();
-            SelectedViewType = MainWindowViewType.Tasks;
+            //DIHelper.Instance.EventAggregator.GetEvent<OnTasksNavigateEvent>().Publish();
+            //SelectedViewType = MainWindowViewType.Tasks;
+            DIHelper.Instance.RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(TasksControlView));
         }
 
         private void onLoginSucceeded(string userName)
@@ -87,11 +111,15 @@ namespace HPAdmin.UI.ViewModels
 
         private void logout()
         {
+            raiseLogout();
+            showLoginContent(true);
+        }
+
+        private void raiseLogout()
+        {
             LoggedUserName = null;
             IsLoggedIn = false;
-            
             raiseCommandCanExecutes();
-            showLogin();
         }
 
         private void raiseCommandCanExecutes()
@@ -106,9 +134,9 @@ namespace HPAdmin.UI.ViewModels
         }
     }
 
-    public enum MainWindowViewType
-    {
-        Login,
-        Tasks
-    }
+    //public enum MainWindowViewType
+    //{
+    //    Login,
+    //    Tasks
+    //}
 }

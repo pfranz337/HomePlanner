@@ -19,9 +19,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HPAdmin.Data\HPAdmin.Data.csproj" />
+    <ProjectReference Include="..\HPAdmin.Localizations\HPAdmin.Localizations.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Compile Update="Views\MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

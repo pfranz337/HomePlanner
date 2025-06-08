@@ -1,0 +1,51 @@
+﻿<#@ template language="C#" hostspecific="true" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Text.Json" #>
+<#@ assembly name="System.Memory" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+<#@ assembly name="System.Collections" #>
+<#@ import namespace="System.Text.Json" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+namespace HPAdmin.Localizations
+{
+    public static class LocalizationKeys
+    {
+<# 
+    var jsonPath = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "Locales", "cs.json");
+    var json = File.ReadAllText(jsonPath);
+    var root = JsonDocument.Parse(json).RootElement;
+    var keys = new HashSet<string>();
+    collectKeys(root, keys);
+    foreach(var key in keys)
+    {
+#>
+        public const string <#= MakeValidIdentifier(key) #> = "<#= key #>";
+<#  } #>
+    }
+}
+
+<#+
+void collectKeys(JsonElement element, HashSet<string> keys)
+{
+    if (element.ValueKind != JsonValueKind.Object)
+        return;
+
+    foreach (var property in element.EnumerateObject())
+    {
+        keys.Add(property.Name);
+    }
+}
+
+string MakeValidIdentifier(string key)
+{
+    var sb = new System.Text.StringBuilder();
+    if (!char.IsLetter(key, 0) && key[0] != '_')
+        sb.Append('_');
+    foreach (var c in key)
+        sb.Append(char.IsLetterOrDigit(c) || c == '_' ? c : '_');
+    return sb.ToString();
+}
+#>

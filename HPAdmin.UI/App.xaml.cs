@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using System.Windows;
 using AutoMapper;
 using HPAdmin.Data.DbContext;
+using HPAdmin.Localizations;
 using HPAdmin.Shared;
 using HPAdmin.UI.Helpers;
 using HPAdmin.UI.Mapper;
@@ -58,6 +60,7 @@ public partial class App
         containerRegistry.RegisterSingleton<SessionService>();
 
         DIHelper.Create(containerRegistry);
+        LocalizationManager.SetCulture(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
     }
 
     protected override void InitializeShell(Window shell)

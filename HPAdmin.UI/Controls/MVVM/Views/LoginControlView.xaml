@@ -4,26 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:base="clr-namespace:HPAdmin.UI.Views.Base"
-             xmlns:converters="clr-namespace:HPAdmin.UI.Converters"
              xmlns:viewModels="clr-namespace:HPAdmin.UI.Controls.MVVM.ViewModels"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:localizations="clr-namespace:HPAdmin.Localizations;assembly=HPAdmin.Localizations"
+             xmlns:markup="clr-namespace:HPAdmin.UI.MarkupExtensions"
+             xmlns:converters="clr-namespace:HPAdmin.UI.Converters"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:LoginControlViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="20">
         <StackPanel>
-            <TextBlock Text="Přihlášení" FontSize="18" Margin="0 0 0 10"/>
+            <TextBlock Text="{markup:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LoginLabel}}" 
+                       FontSize="18" Margin="0 0 0 10"/>
 
             <StackPanel Visibility="{Binding IsLoggedIn, Converter={converters:BoolToVisibilityConverter Invert=True}}">
                 <TextBox Text="{Binding UserName}" Margin="0 0 0 5"/>
                 <PasswordBox Margin="0 0 0 10" />
-                <Button Content="Přihlásit" Command="{Binding LoginCommand}" CommandParameter="{}" />
+                <Button Content="{markup:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LoginButton}}" 
+                        Command="{Binding LoginCommand}" CommandParameter="{}" />
             </StackPanel>
 
             <StackPanel Visibility="{Binding IsLoggedIn, Converter={converters:BoolToVisibilityConverter}}">
                 <TextBlock Text="{Binding LoggedUserName}" Margin="0 0 0 10"/>
-                <Button Content="Odhlásit" Command="{Binding LogoutCommand}" />
+                <Button Content="{markup:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LogoutButton}}" 
+                        Command="{Binding LogoutCommand}" />
             </StackPanel>
         </StackPanel>
     </Grid>

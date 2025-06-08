@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="Locales\*.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="LocalizationKeys.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>LocalizationKeys.tt</DependentUpon>
+	  </None>
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Update="Locales\cs.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </AdditionalFiles>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="LocalizationKeys.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>LocalizationKeys.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="LocalizationKeys.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>LocalizationKeys.tt</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+</Project>

@@ -9,6 +9,6 @@ public class LocalizationExtension : MarkupExtension
 
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        return LocalizationManager.GetString(Key) ?? string.Empty;
+        return LocalizationManager.GetString(Key);
     }
 }

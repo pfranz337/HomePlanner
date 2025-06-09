@@ -1,8 +1,4 @@
-﻿using HPAdmin.UI.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace HPAdmin.UI.TemplateSelectors;
+﻿namespace HomePlanner.UI.TemplateSelectors;
 
 //public class MainWindowViewTemplateSelector : DataTemplateSelector
 //{

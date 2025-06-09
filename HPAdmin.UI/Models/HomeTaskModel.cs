@@ -1,7 +1,7 @@
-﻿using HPAdmin.Shared.Dto;
-using HPAdmin.UI.Models.Base;
+﻿using HomePlanner.Shared.Dto;
+using HomePlanner.UI.Models.Base;
 
-namespace HPAdmin.UI.Models;
+namespace HomePlanner.UI.Models;
 
 public class HomeTaskModel(HomeTaskDto dto) : ModelBase<HomeTaskDto>(dto)
 {

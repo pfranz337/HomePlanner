@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using HPAdmin.Shared.Dto;
-using HPAdmin.Shared.Enums;
+using HomePlanner.Shared.Dto;
+using HomePlanner.Shared.Enums;
 
-namespace HPAdmin.UI.Models.Base;
+namespace HomePlanner.UI.Models.Base;
 
 public sealed class ModelListBase<TModel, TDto> : ObservableCollection<TModel>
     where TModel : ModelBase<TDto>

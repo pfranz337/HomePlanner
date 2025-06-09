@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using HPAdmin.Shared.Dto;
-using HPAdmin.UI.Models.Base;
+using HomePlanner.Shared.Dto;
+using HomePlanner.UI.Models.Base;
 
-namespace HPAdmin.UI.Mapper;
+namespace HomePlanner.UI.Mapper;
 
 public class MappingProfile<TDto, TModel> : Profile where TDto : DtoDataBase where TModel : ModelBase<TDto>
 {

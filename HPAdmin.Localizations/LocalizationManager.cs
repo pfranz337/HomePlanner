@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace HPAdmin.Localizations;
+namespace HomePlanner.Localizations;
 
 public static class LocalizationManager
 {

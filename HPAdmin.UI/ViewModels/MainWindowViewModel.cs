@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using HPAdmin.Data.DbContext;
-using HPAdmin.UI.Controls.MVVM.Views;
-using HPAdmin.UI.Helpers;
-using HPAdmin.UI.ViewModels.Base;
+using HomePlanner.Data.DbContext;
+using HomePlanner.UI.Controls.MVVM.Views;
+using HomePlanner.UI.Helpers;
+using HomePlanner.UI.ViewModels.Base;
 
-namespace HPAdmin.UI.ViewModels
+namespace HomePlanner.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {

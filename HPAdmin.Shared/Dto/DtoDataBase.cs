@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using HPAdmin.Shared.Enums;
+using HomePlanner.Shared.Enums;
 
-namespace HPAdmin.Shared.Dto;
+namespace HomePlanner.Shared.Dto;
 
 public abstract class DtoDataBase(Guid id, DtoState state, byte[]? stamp)
 {

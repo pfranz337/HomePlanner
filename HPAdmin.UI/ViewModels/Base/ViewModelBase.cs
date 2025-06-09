@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HPAdmin.Data.DbContext;
+using HomePlanner.Data.DbContext;
 
-namespace HPAdmin.UI.ViewModels.Base;
+namespace HomePlanner.UI.ViewModels.Base;
 
 public abstract class ViewModelBase(AppDbContext context, IMapper mapper) : BindableBase
 {

@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.UI.EventAgregators
+﻿namespace HomePlanner.UI.EventAgregators
 {
     //public class OnLoginEvent : PubSubEvent<string>
     //{

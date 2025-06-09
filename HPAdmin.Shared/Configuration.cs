@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.Shared;
+﻿namespace HomePlanner.Shared;
 
 public static class Configuration
 {

@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.Shared.Enums;
+﻿namespace HomePlanner.Shared.Enums;
 
 public enum DtoState
 {

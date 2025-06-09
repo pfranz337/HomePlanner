@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HPAdmin.Data.Migrations
+namespace HomePlanner.Data.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateDtoBase : Migration

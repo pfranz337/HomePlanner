@@ -1,15 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using AutoMapper;
-using HPAdmin.Data;
-using HPAdmin.Data.DbContext;
-using HPAdmin.Shared.Dto;
-using HPAdmin.UI.Models;
-using HPAdmin.UI.Models.Base;
-using HPAdmin.UI.ViewModels.Base;
+using HomePlanner.Data;
+using HomePlanner.Data.DbContext;
+using HomePlanner.Shared.Dto;
+using HomePlanner.UI.Models;
+using HomePlanner.UI.Models.Base;
+using HomePlanner.UI.ViewModels.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace HPAdmin.UI.Controls.MVVM.ViewModels;
+namespace HomePlanner.UI.Controls.MVVM.ViewModels;
 
 public class TasksControlViewModel : ViewModelBase, IRegionMemberLifetime, INavigationAware
 {

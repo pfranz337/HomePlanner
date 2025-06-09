@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HPAdmin.Shared\HPAdmin.Shared.csproj" />
+    <ProjectReference Include="..\HPAdmin.Shared\HomePlanner.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

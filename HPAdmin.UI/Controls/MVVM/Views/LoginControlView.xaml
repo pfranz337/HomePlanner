@@ -1,33 +1,33 @@
-﻿<base:BaseControlView x:Class="HPAdmin.UI.Controls.MVVM.Views.LoginControlView"
+﻿<base:BaseControlView x:Class="HomePlanner.UI.Controls.MVVM.Views.LoginControlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:base="clr-namespace:HPAdmin.UI.Views.Base"
-             xmlns:viewModels="clr-namespace:HPAdmin.UI.Controls.MVVM.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mvvm="http://prismlibrary.com/"
-             xmlns:localizations="clr-namespace:HPAdmin.Localizations;assembly=HPAdmin.Localizations"
-             xmlns:markup="clr-namespace:HPAdmin.UI.MarkupExtensions"
-             xmlns:converters="clr-namespace:HPAdmin.UI.Converters"
+             xmlns:localizations="clr-namespace:HomePlanner.Localizations;assembly=HomePlanner.Localizations"
+             xmlns:base="clr-namespace:HomePlanner.UI.Views.Base"
+             xmlns:markupExtensions="clr-namespace:HomePlanner.UI.MarkupExtensions"
+             xmlns:converters="clr-namespace:HomePlanner.UI.Converters"
+             xmlns:viewModels="clr-namespace:HomePlanner.UI.Controls.MVVM.ViewModels"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:LoginControlViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="20">
         <StackPanel>
-            <TextBlock Text="{markup:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LoginLabel}}" 
+            <TextBlock Text="{markupExtensions:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LoginLabel}}" 
                        FontSize="18" Margin="0 0 0 10"/>
 
             <StackPanel Visibility="{Binding IsLoggedIn, Converter={converters:BoolToVisibilityConverter Invert=True}}">
                 <TextBox Text="{Binding UserName}" Margin="0 0 0 5"/>
                 <PasswordBox Margin="0 0 0 10" />
-                <Button Content="{markup:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LoginButton}}" 
+                <Button Content="{markupExtensions:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LoginButton}}" 
                         Command="{Binding LoginCommand}" CommandParameter="{}" />
             </StackPanel>
 
             <StackPanel Visibility="{Binding IsLoggedIn, Converter={converters:BoolToVisibilityConverter}}">
                 <TextBlock Text="{Binding LoggedUserName}" Margin="0 0 0 10"/>
-                <Button Content="{markup:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LogoutButton}}" 
+                <Button Content="{markupExtensions:Localization Key={x:Static localizations:LocalizationKeys.LoginControl_LogoutButton}}" 
                         Command="{Binding LogoutCommand}" />
             </StackPanel>
         </StackPanel>

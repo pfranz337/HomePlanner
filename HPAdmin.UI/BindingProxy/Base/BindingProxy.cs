@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using HPAdmin.UI.ViewModels.Base;
+using HomePlanner.UI.ViewModels.Base;
 
-namespace HPAdmin.UI.BindingProxy.Base;
+namespace HomePlanner.UI.BindingProxy.Base;
 
 public class BindingProxy<TViewModel> : Freezable where TViewModel : ViewModelBase
 {

@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace HPAdmin.UI.Converters;
+namespace HomePlanner.UI.Converters;
 
 [MarkupExtensionReturnType(typeof(IValueConverter))]
 public abstract class MarkupExtensionConverter : MarkupExtension, IValueConverter

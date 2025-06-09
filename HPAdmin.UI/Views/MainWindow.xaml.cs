@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.UI.Views;
+﻿namespace HomePlanner.UI.Views;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml

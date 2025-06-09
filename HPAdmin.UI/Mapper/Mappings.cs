@@ -1,7 +1,7 @@
-﻿using HPAdmin.Shared.Dto;
-using HPAdmin.UI.Models;
+﻿using HomePlanner.Shared.Dto;
+using HomePlanner.UI.Models;
 
-namespace HPAdmin.UI.Mapper;
+namespace HomePlanner.UI.Mapper;
 
 public static class Mappings
 {

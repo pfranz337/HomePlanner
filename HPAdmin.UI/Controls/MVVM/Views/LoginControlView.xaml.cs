@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.UI.Controls.MVVM.Views;
+﻿namespace HomePlanner.UI.Controls.MVVM.Views;
 
 /// <summary>
 /// Interaction logic for LoginControl.xaml

@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
-using HPAdmin.Shared.Dto;
-using HPAdmin.Shared.Enums;
+using HomePlanner.Shared.Dto;
+using HomePlanner.Shared.Enums;
 
-namespace HPAdmin.UI.Models.Base;
+namespace HomePlanner.UI.Models.Base;
 
 public class ModelBase<TDto>(TDto dto) : BindableBase
     where TDto : DtoDataBase

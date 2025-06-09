@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace HPAdmin.UI.Views.Base
+namespace HomePlanner.UI.Views.Base
 {
     public interface IView
     {

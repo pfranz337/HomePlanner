@@ -1,4 +1,4 @@
-﻿namespace HPAdmin.UI.Helpers
+﻿namespace HomePlanner.UI.Helpers
 {
     public static class RegionNames
     {

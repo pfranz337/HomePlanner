@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 
-namespace HPAdmin.UI.Converters;
+namespace HomePlanner.UI.Converters;
 
 
 public class BoolToVisibilityConverter : MarkupExtensionConverter

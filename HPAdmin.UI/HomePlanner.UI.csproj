@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HPAdmin.Data\HPAdmin.Data.csproj" />
-    <ProjectReference Include="..\HPAdmin.Localizations\HPAdmin.Localizations.csproj" />
+    <ProjectReference Include="..\HPAdmin.Data\HomePlanner.Data.csproj" />
+    <ProjectReference Include="..\HPAdmin.Localizations\HomePlanner.Localizations.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

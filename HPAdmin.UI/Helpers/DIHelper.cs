@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using HPAdmin.UI.Views.Base;
+using HomePlanner.UI.Views.Base;
 
-namespace HPAdmin.UI.Helpers;
+namespace HomePlanner.UI.Helpers;
 
 public class DIHelper
 {

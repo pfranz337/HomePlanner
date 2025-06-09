@@ -1,5 +1,5 @@
 ﻿
-namespace HPAdmin.Localizations
+namespace HomePlanner.Localizations
 {
     public static class LocalizationKeys
     {

@@ -1,9 +1,9 @@
-﻿using HPAdmin.Shared.Dto;
-using HPAdmin.Shared.Enums;
+﻿using HomePlanner.Shared.Dto;
+using HomePlanner.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace HPAdmin.Data.DbContext;
+namespace HomePlanner.Data.DbContext;
 public sealed class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public DbSet<HomeTaskDto> HomeTasks { get; set; }

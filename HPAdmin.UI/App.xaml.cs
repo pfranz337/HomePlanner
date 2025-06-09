@@ -2,17 +2,17 @@
 using System.IO;
 using System.Windows;
 using AutoMapper;
-using HPAdmin.Data.DbContext;
-using HPAdmin.Localizations;
-using HPAdmin.Shared;
-using HPAdmin.UI.Helpers;
-using HPAdmin.UI.Mapper;
-using HPAdmin.UI.ViewModels;
-using HPAdmin.UI.Views;
+using HomePlanner.Data.DbContext;
+using HomePlanner.Localizations;
+using HomePlanner.Shared;
+using HomePlanner.UI.Helpers;
+using HomePlanner.UI.Mapper;
+using HomePlanner.UI.ViewModels;
+using HomePlanner.UI.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace HPAdmin.UI;
+namespace HomePlanner.UI;
 
 /// <summary>
 /// Interaction logic for App.xaml

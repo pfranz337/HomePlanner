@@ -1,8 +1,8 @@
-﻿using HPAdmin.Shared.Dto;
-using HPAdmin.Shared.Enums;
+﻿using HomePlanner.Shared.Dto;
+using HomePlanner.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace HPAdmin.Data
+namespace HomePlanner.Data
 {
     public static class EntityExtensions
     {

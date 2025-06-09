@@ -1,9 +1,9 @@
 ﻿using System.Windows;
-using HPAdmin.UI.Controls.MVVM.Views;
-using HPAdmin.UI.Views;
-using HPAdmin.UI.Helpers;
+using HomePlanner.UI.Controls.MVVM.Views;
+using HomePlanner.UI.Helpers;
+using HomePlanner.UI.Views;
 
-namespace HPAdmin.UI.Modules;
+namespace HomePlanner.UI.Modules;
 
 public class MainModule : IModule
 {

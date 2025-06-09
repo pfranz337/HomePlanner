@@ -1,7 +1,7 @@
 ﻿using System.Windows.Markup;
-using HPAdmin.Localizations;
+using HomePlanner.Localizations;
 
-namespace HPAdmin.UI.MarkupExtensions;
+namespace HomePlanner.UI.MarkupExtensions;
 
 public class LocalizationExtension : MarkupExtension
 {

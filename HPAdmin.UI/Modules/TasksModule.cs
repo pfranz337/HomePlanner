@@ -1,6 +1,6 @@
-﻿using HPAdmin.UI.Controls.MVVM.Views;
+﻿using HomePlanner.UI.Controls.MVVM.Views;
 
-namespace HPAdmin.UI.Modules;
+namespace HomePlanner.UI.Modules;
 
 public class TasksModule : IModule
 {

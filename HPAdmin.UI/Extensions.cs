@@ -1,7 +1,7 @@
-﻿using HPAdmin.Shared.Dto;
-using HPAdmin.UI.Models.Base;
+﻿using HomePlanner.Shared.Dto;
+using HomePlanner.UI.Models.Base;
 
-namespace HPAdmin.UI;
+namespace HomePlanner.UI;
 
 public static class Extensions
 {

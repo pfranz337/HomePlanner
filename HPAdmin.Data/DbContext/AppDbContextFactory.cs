@@ -1,9 +1,9 @@
-﻿using HPAdmin.Shared;
+﻿using HomePlanner.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace HPAdmin.Data.DbContext;
+namespace HomePlanner.Data.DbContext;
 
 public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
